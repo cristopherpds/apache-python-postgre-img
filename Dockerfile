@@ -9,12 +9,16 @@ RUN apt-get update && apt-get install -y \
     apache2 \
     python3 \
     python3-pip \
+    libapache2-mod-wsgi-py3 \
     postgresql \
     postgresql-contrib \
     && apt-get clean
 
-# Exponemos los puertos (80 para Apache, 5432 para PostgreSQL)
-EXPOSE 80 5432
+# Configuración de PostgreSQL para usar el puerto 5435
+RUN sed -i "s/#port = 5432/port = 5435/" /etc/postgresql/*/main/postgresql.conf
+
+# Exponemos los puertos (80 para Apache, 5435 para PostgreSQL)
+EXPOSE 80 5435
 
 # Configuración de PostgreSQL
 RUN service postgresql start && \
@@ -23,6 +27,9 @@ RUN service postgresql start && \
     
 # Definir volumen para persistencia de PostgreSQL
 VOLUME ["/var/lib/postgresql/data"]
+
+# Habilitar mod_wsgi para Apache
+RUN a2enmod wsgi
 
 # Comando para ejecutar Apache y PostgreSQL al iniciar el contenedor
 CMD ["sh", "-c", "service postgresql start && apachectl -D FOREGROUND"]
