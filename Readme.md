@@ -51,4 +51,4 @@ Reemplaza `<id-del-contenedor>` con el ID real del contenedor en ejecución.
 - Los datos de PostgreSQL se persisten en el volumen `/var/lib/postgresql/data`.
 
 No dudes en contactarme si tienes alguna pregunta o necesitas más ayuda.
-```
+
