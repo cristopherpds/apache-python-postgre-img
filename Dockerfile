@@ -21,9 +21,10 @@ RUN sed -i 's/#port = 5432/port = 5435/' /etc/postgresql/14/main/postgresql.conf
 
 # Configuracion PostgreSQL authentication y port
 RUN service postgresql start && \
+    pg_version=$(ls /etc/postgresql/) && \
     su - postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD 'password';\"" && \
-    echo "host all all 0.0.0.0/0 md5" >> /etc/postgresql/14/main/pg_hba.conf && \
-    echo "listen_addresses='*'" >> /etc/postgresql/14/main/postgresql.conf && \
+    echo "host all all 0.0.0.0/0 md5" >> /etc/postgresql/$pg_versionmain/pg_hba.conf && \
+    echo "listen_addresses='*'" >> /etc/postgresql/$pg_version/main/postgresql.conf && \
     service postgresql stop
 
 # Configure Apache WSGI
