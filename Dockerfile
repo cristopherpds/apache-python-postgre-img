@@ -14,14 +14,12 @@ RUN apt-get update && apt-get install -y \
     postgresql-contrib \
     && apt-get clean
 
-# Configuración de PostgreSQL para usar el puerto 5435
+# Configuración de PostgreSQL para usar el puerto 5432
 RUN PG_CONF_DIR=$(find /etc/postgresql/ -name postgresql.conf | head -n 1 | xargs dirname) && \
-    echo "PostgreSQL config directory: $PG_CONF_DIR" && \
-    sed -i "s/#port = 5432/port = 5435/" $PG_CONF_DIR/postgresql.conf && \
-    echo "host all all 0.0.0.0/0 md5" >> $PG_CONF_DIR/pg_hba.conf && \
-    sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" $PG_CONF_DIR/postgresql.conf
+    sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" $PG_CONF_DIR/postgresql.conf && \
+    echo "host all all 0.0.0.0/0 md5" >> $PG_CONF_DIR/pg_hba.conf
     
-EXPOSE 80 5435
+EXPOSE 80 5432
 
 # Configuración de PostgreSQL
 RUN service postgresql start && \
