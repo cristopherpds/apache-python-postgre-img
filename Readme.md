@@ -17,7 +17,7 @@ Ejecutar el Contenedor de Docker
 Para ejecutar el contenedor de Docker, usa el siguiente comando:
 
 ```sh
-docker run -d --name mi-contenedor -p 80:80 -p 5435:5435 -v /ruta/a/tu/data:/var/lib/postgresql/data ghcr.io/cristopherpds/apache-python-postgre-img:latest
+docker run -d --name mi-contenedor -p 80:80 -p 5435:5432 -v /ruta/a/tu/data:/var/lib/postgresql/data ghcr.io/cristopherpds/apache-python-postgre-img:latest
 ```
 
 
